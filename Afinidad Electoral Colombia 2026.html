@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Test de afinidad electoral | Colombia 2026</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f2f5f7;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+      line-height: 1.5;
+      color: #1a2c38;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 2rem;
+      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+    }
+
+    .hero {
+      background: #ffffff;
+      padding: 2rem 2.5rem 1.5rem;
+      border-bottom: 1px solid #e4ecef;
+    }
+
+    .hero h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      background: linear-gradient(135deg, #166b6b, #2a7f6e);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      color: #4a6a77;
+      margin-top: 0.75rem;
+      font-size: 1rem;
+      max-width: 80%;
+    }
+
+    .badge-metod {
+      display: inline-block;
+      background: #eef3f6;
+      border-radius: 60px;
+      padding: 0.2rem 0.9rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #1e6f5c;
+      margin-top: 1rem;
+    }
+
+    .info-box {
+      background: #eef6f3;
+      border-left: 4px solid #2a7f6e;
+      padding: 1rem 1.5rem;
+      margin: 1.5rem 2rem 0 2rem;
+      border-radius: 1rem;
+      font-size: 0.85rem;
+      color: #1e5a55;
+    }
+
+    .info-box p {
+      margin: 0.3rem 0;
+    }
+
+    .dimension-nav {
+      background: #f9fbfc;
+      padding: 0.8rem 2rem;
+      border-bottom: 1px solid #e2eaef;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .dimension-nav a {
+      color: #2c6e6e;
+      text-decoration: none;
+      transition: 0.2s;
+    }
+
+    .dimension-nav a:hover {
+      color: #0f4b4b;
+      text-decoration: underline;
+    }
+
+    main {
+      padding: 2rem 2.5rem;
+    }
+
+    .dimension {
+      margin-bottom: 2.8rem;
+      scroll-margin-top: 1.5rem;
+    }
+
+    .dimension h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #144e5e;
+      border-left: 4px solid #3a9b8c;
+      padding-left: 1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .question-card {
+      background: #ffffff;
+      border: 1px solid #dee9ef;
+      border-radius: 1.25rem;
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 1.2rem;
+      transition: box-shadow 0.1s ease;
+    }
+
+    .question-text {
+      font-weight: 600;
+      font-size: 1.05rem;
+      margin-bottom: 1rem;
+      color: #1a3f48;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      padding-left: 0.5rem;
+    }
+
+    .option {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      cursor: pointer;
+      font-size: 0.92rem;
+      color: #2c4b57;
+      padding: 0.3rem 0;
+      border-radius: 0.5rem;
+      transition: background 0.1s;
+    }
+
+    .option input {
+      margin-top: 0.2rem;
+      accent-color: #2c8f7a;
+      width: 1.1rem;
+      height: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .option label {
+      flex: 1;
+      cursor: pointer;
+      line-height: 1.4;
+    }
+
+    .action-area {
+      background: #f9fefc;
+      border-radius: 1.5rem;
+      padding: 2rem;
+      margin-top: 2rem;
+      text-align: center;
+      border: 1px solid #cfe3e8;
+    }
+
+    .btn {
+      background: #1f7a6b;
+      border: none;
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.8rem 2rem;
+      border-radius: 3rem;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+
+    .btn:hover {
+      background: #0f5f52;
+      transform: translateY(-1px);
+    }
+
+    .result-box {
+      margin-top: 1.8rem;
+      background: #ffffff;
+      border-radius: 1.5rem;
+      padding: 1.2rem;
+      border: 1px solid #cde3e8;
+      text-align: left;
+    }
+
+    .result-header {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #135b4f;
+    }
+
+    .result-candidate {
+      background: #edf6f3;
+      padding: 0.8rem 1.2rem;
+      border-radius: 1rem;
+      margin: 0.6rem 0;
+    }
+
+    .progress-bar {
+      background: #dee9e6;
+      border-radius: 20px;
+      height: 0.6rem;
+      width: 100%;
+      margin: 0.5rem 0 0.2rem;
+    }
+
+    .progress-fill {
+      background: #1f7a6b;
+      width: 0%;
+      height: 0.6rem;
+      border-radius: 20px;
+    }
+
+    .footer-note {
+      margin-top: 2rem;
+      font-size: 0.75rem;
+      color: #6d8e98;
+      text-align: center;
+      border-top: 1px solid #e2eaef;
+      padding-top: 1.5rem;
+    }
+
+    .error-message {
+      background: #ffe6e5;
+      color: #b33a34;
+      padding: 0.8rem;
+      border-radius: 1rem;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 760px) {
+      .hero p { max-width: 100%; }
+      main { padding: 1.2rem; }
+      .question-card { padding: 1rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="hero">
+    <h1>🗳️ Test de afinidad electoral<br>Colombia 2026</h1>
+    <p>Descubre qué candidato o candidata presidencial representa mejor tus ideas. <br>Basado en propuestas viables (fiscal, jurídica y técnicamente) de los cinco aspirantes principales.</p>
+    <div class="badge-metod">✅ 25 preguntas · 8 dimensiones · opciones en orden aleatorio</div>
+  </div>
+  <div class="info-box">
+    <p>📌 <strong>Importante:</strong> Las opciones de respuesta corresponden exclusivamente a las propuestas reales y viables de los cinco candidatos presidenciales (sin identificar cuál es cuál en las alternativas).</p>
+    <p>📌 Debes responder <strong>todas las preguntas</strong> seleccionando la opción más cercana a tu afinidad. Al final obtendrás el candidato con mayor coincidencia.</p>
+  </div>
+  <div class="dimension-nav">
+    <a href="#economia">💰 Economía</a> <a href="#empleo">👔 Empleo</a> <a href="#seguridad">🛡️ Seguridad</a>
+    <a href="#social">🧑‍🤝‍🧑 Política social</a> <a href="#salud">🏥 Salud</a> <a href="#educacion">📚 Educación</a>
+    <a href="#ambiente">🌿 Ambiente</a> <a href="#instituciones">⚖️ Instituciones</a>
+  </div>
+  <main>
+    <form id="testForm">
+      <!-- Las preguntas se generan dinámicamente con JS, opciones mezcladas aleatoriamente -->
+    </form>
+    <div class="action-area">
+      <button type="button" class="btn" id="calcularBtn">📊 Ver mi candidato afín</button>
+      <div id="resultadoPanel" class="result-box" style="display: none;"></div>
+    </div>
+    <div class="footer-note">
+      <strong>Metodología:</strong> Cada opción corresponde a la postura real de uno de los cinco precandidatos (Cepeda, De la Espriella, Valencia, Fajardo, López) con base en programas, declaraciones y viabilidad fiscal. Las alternativas se presentan en orden aleatorio para evitar sesgos.
+    </div>
+  </main>
+</div>
+
+<script>
+  // ---------- DEFINICIÓN DE PREGUNTAS (25) ----------
+  // Cada pregunta: texto, opciones (array de strings), candidatoAsociado (0: Cepeda,1: Espriella,2: Valencia,3: Fajardo,4: López)
+  // El orden original es fijo (índice 0->Cepeda, 1->Espriella, etc.). Luego al renderizar mezclaremos.
+  const preguntasBase = [
+    // DIMENSIÓN ECONOMÍA (4)
+    { dim: "economia", text: "1. Para reducir el déficit fiscal (~5,2% del PIB), ¿qué medida respalda más?", opts: [
+      "Aumentar el impuesto a la renta de ingresos altos (>$15M) y reducir exenciones.",
+      "Recortar el gasto de funcionamiento en un 10% eliminando duplicidades.",
+      "Congelar el gasto público nominal durante 2 años y reducir subsidios a combustibles.",
+      "Ampliar la base de IVA a servicios digitales y gravar dividendos, respetando regla fiscal.",
+      "Crear un impuesto a transacciones financieras del 0.2% destinado a inversión."
+    ], candidato: [0,1,2,3,4] },
+    { dim: "economia", text: "2. Frente a la deuda pública (58% del PIB proyectado 2026), ¿qué enfoque prefiere?", opts: [
+      "Reestructurar deuda externa mediante canje por inversión en transición energética (bonos ESG).",
+      "Reducir déficit primario en 0.5% del PIB anual sin nuevos impuestos, ajustando gasto.",
+      "Acelerar privatización de activos estatales no estratégicos para bajar deuda.",
+      "Mantener niveles actuales de deuda mientras se mejoran reformas estructurales.",
+      "Emitir bonos verdes y sociales hasta 1% del PIB anual para infraestructura climática."
+    ], candidato: [0,1,2,3,4] },
+    { dim: "economia", text: "3. Reforma tributaria: ¿cuál medida le parece más adecuada?", opts: [
+      "Gravar patrimonios superiores a $2.000 millones con tasa del 1,5%.",
+      "Reducir impuesto de renta corporativo al 30% y eliminar ICA para pequeñas empresas.",
+      "Reducir tarifas de IVA a solo dos (general y 10%) y eliminar impuesto a la riqueza.",
+      "Fortalecer la DIAN y combatir evasión para recuperar 1,5% del PIB.",
+      "Crear impuesto al carbono para grandes emisores (≥50k ton CO₂) con subsidios a reconversión."
+    ], candidato: [0,1,2,3,4] },
+    { dim: "economia", text: "4. Subsidios a combustibles (Fondo de Estabilización): ¿qué hacer?", opts: [
+      "Eliminación gradual en 3 años con transferencias compensatorias a hogares vulnerables.",
+      "Congelar precios para estratos 1 y 2, liberalizar para el resto.",
+      "Eliminarlos solo para gasolina de alto octanaje, mantener diésel para carga.",
+      "Sustituir subsidio a oferta por subsidio directo a demanda (transporte público).",
+      "Indexar al precio internacional con un tope de protección al consumidor."
+    ], candidato: [0,1,2,3,4] },
+    // DIMENSIÓN EMPLEO (3)
+    { dim: "empleo", text: "5. Para reducir la informalidad laboral (55%), ¿qué priorizaría?", opts: [
+      "Aumentos salariales ligados a productividad por sector + subsidios a nómina para pymes que formalicen.",
+      "Reducir costos parafiscales y eliminar el auxilio de transporte.",
+      "Flexibilizar contratación por horas y prestaciones proporcionales.",
+      "Crear contrato 'formación-empleo' con exención de aportes el primer año.",
+      "Subsidiar el 50% de aportes a seguridad social de mujeres cabeza de familia durante 24 meses."
+    ], candidato: [0,1,2,3,4] },
+    { dim: "empleo", text: "6. La jornada laboral en Colombia ya es de 40 horas semanales por ley. ¿Qué postura respalda frente a este tema y el trabajo en plataformas?", opts: [
+      "Mantener las 40 horas y reducir gradualmente a 38 horas sin afectar salario.",
+      "Permitir acuerdos individuales para superar las 40 horas con pago de horas extras.",
+      "Flexibilizar la jornada por promedios mensuales (máx 48h semanales en promedio).",
+      "Implementar jornadas flexibles y estatuto laboral para plataformas digitales con cotizaciones mínimas.",
+      "Mantener la ley actual y fortalecer la inspección de trabajo en apps."
+    ], candidato: [0,1,2,3,4] }, // actualizada: opción 0 Cepeda (reducir a 38h), 1 Espriella (acuerdos individuales), 2 Valencia (flexibilizar por promedios), 3 Fajardo (jornadas flexibles + estatuto plataformas), 4 López (mantener e inspección)
+    { dim: "empleo", text: "7. ¿Cómo incentivar el empleo juvenil (19-28 años)?", opts: [
+      "Exonerar aportes parafiscales 18 meses para empresas que contraten jóvenes en primer empleo.",
+      "Reducir salario mínimo juvenil al 75% del general.",
+      "Pasantía laboral de 6 meses con medio salario financiada por el SENA.",
+      "Bonos de conexidad: Estado paga 30% del salario por un año.",
+      "Programas de formación dual (alternancia aula-empresa) con certificación."
+    ], candidato: [0,1,2,3,4] },
+    // DIMENSIÓN SEGURIDAD (3)
+    { dim: "seguridad", text: "8. Estrategia frente al ELN y disidencias:", opts: [
+      "Reanudar diálogos con grupos con voluntad de paz y cese al fuego bilateral.",
+      "Suspender todo diálogo y ordenar captura masiva de cabecillas.",
+      "Operaciones militares ofensivas sin excluir bombardeos contra campamentos.",
+      "Negociar sometimiento a justicia para grupos sin fines políticos, diálogo acotado con ELN.",
+      "Fortalecer inteligencia e inversión social en territorios PDET + operaciones selectivas."
+    ], candidato: [0,1,2,3,4] },
+    { dim: "seguridad", text: "9. Fuerza Pública y seguridad ciudadana:", opts: [
+      "Reducir pie de fuerza en ciudades, fortalecer policía comunitaria.",
+      "Autorizar uso de armas ante amenazas y blindar judicialmente a uniformados.",
+      "Mantener patrullaje actual y aumentar penas para reincidentes.",
+      "Evaluación externa del desempeño policial y fondo de indemnización a víctimas de abuso.",
+      "Especializar policía en delitos de alto impacto y separarla del Ministerio de Defensa."
+    ], candidato: [0,1,2,3,4] },
+    { dim: "seguridad", text: "10. Narcotráfico y cultivos de coca:", opts: [
+      "Erradicación manual voluntaria con pago por sustitución ($50 mil/ha/mes por 2 años).",
+      "Retomar aspersión aérea con glifosato en zonas de alta concentración.",
+      "Erradicación forzosa sin compensación por cultivos ilícitos.",
+      "Enfoque mixto: erradicación manual en resguardos + aspersión terrestre en parques.",
+      "Judicializar grandes laboratorios y rutas de salida, no a campesinos."
+    ], candidato: [0,1,2,3,4] },
+    // POLÍTICA SOCIAL (3)
+    { dim: "social", text: "11. Reducir pobreza (34%) y desigualdad:", opts: [
+      "Ampliar transferencias (Renta Ciudadana) e ingreso básico focalizado.",
+      "Reducir impuestos para que empresas generen empleo, sin nuevos subsidios.",
+      "Mejorar focalización del gasto y eliminar programas ineficientes.",
+      "Fortalecer programas existentes condicionados a educación y salud.",
+      "Crear sistema nacional de cuidados y apoyos a madres cabeza de hogar."
+    ], candidato: [0,1,2,3,4] },
+    { dim: "social", text: "12. Reforma pensional y laboral actual:", opts: [
+      "Pasar a un pilar solidario único, eliminando competencia de fondos privados.",
+      "Privatizar totalmente el sistema pensional.",
+      "Mantener el sistema de ahorro individual como eje.",
+      "Preservar acuerdo de 2025 de pilares mixtos, ajustando parámetros.",
+      "Revisar reforma laboral para proteger trabajadores de plataformas."
+    ], candidato: [0,1,2,3,4] },
+    { dim: "social", text: "13. Grupos étnicos y regiones marginadas:", opts: [
+      "Reconocimiento pleno y presupuesto significativo para territorios indígenas y afro.",
+      "No dar privilegios especiales por etnia; igualdad de oportunidades.",
+      "Mantener fueros actuales sin ampliarlos.",
+      "Fortalecer descentralización y autonomías territoriales.",
+      "Enfoque diferencial en planes de desarrollo con consulta previa vinculante."
+    ], candidato: [0,1,2,3,4] },
+    // SALUD (3)
+    { dim: "salud", text: "14. Modelo de salud ideal:", opts: [
+      "Sistema público universal tipo NHS, eliminar EPS.",
+      "Seguros privados voluntarios, Estado mínimo en salud.",
+      "Mantener modelo mixto actual (EPS públicas y privadas) con más competencia.",
+      "Reforma gradual: fortalecer red pública, conservando privada regulada.",
+      "Fortalecer atención primaria y reducir intermediación de las EPS."
+    ], candidato: [0,1,2,3,4] },
+    { dim: "salud", text: "15. Deudas EPS-IPS y tutelas en salud:", opts: [
+      "Liquidar EPS con malos resultados y crear entidad única de gestión.",
+      "Eliminar trámites, libertad de elección y pagos directos.",
+      "Endurecer sanciones a EPS y acelerar flujo de recursos.",
+      "Implementar sistema de pagos electrónicos en tiempo real.",
+      "Supervisión ciudadana y tribunales médicos independientes."
+    ], candidato: [0,1,2,3,4] },
+    { dim: "salud", text: "16. Acceso a medicamentos de alto costo:", opts: [
+      "Centralizar compras públicas y producción estatal de genéricos.",
+      "Liberalizar importación paralela y eliminar barreras.",
+      "Mantener regulación actual con vigilancia de precios.",
+      "Fortalecer la Comisión Nacional de Precios de Medicamentos.",
+      "Incentivar genéricos de calidad y farmacovigilancia activa."
+    ], candidato: [0,1,2,3,4] },
+    // EDUCACIÓN (3)
+    { dim: "educacion", text: "17. Calidad educativa (bajos resultados PISA):", opts: [
+      "Aumentar presupuesto y eliminar pruebas estandarizadas Saber.",
+      "Introducir vales escolares y fomentar colegios privados.",
+      "Evaluar docentes y colegios por resultados, cierre por bajo rendimiento.",
+      "Invertir en formación docente, jornada única y conectividad digital.",
+      "Reducir brechas urbano-rurales con internet y transporte escolar."
+    ], candidato: [0,1,2,3,4] },
+    { dim: "educacion", text: "18. Educación superior y financiación (ICETEX):", opts: [
+      "Gratuidad universal en universidades públicas y condonación condicionada por ingresos (sin condonación total masiva).",
+      "Reducir subsidios a universidades públicas, promover privadas de bajo costo.",
+      "Créditos condonables con intereses de mercado y control de calidad.",
+      "Sistema de becas por mérito y gratuidad gradual según ingresos.",
+      "Ampliar cupos en carreras técnicas y tecnológicas con enfoque regional."
+    ], candidato: [0,1,2,3,4] },
+    { dim: "educacion", text: "19. Formación técnica y bilingüismo:", opts: [
+      "Fortalecer SENA con más recursos y articulación con universidades.",
+      "Privatizar parcialmente la formación técnica.",
+      "Subsidios a la demanda para cursos técnicos privados.",
+      "Programa nacional de inglés con inmersión y certificación docente.",
+      "Centros de innovación regional con alianzas empresariales."
+    ], candidato: [0,1,2,3,4] },
+    // AMBIENTE (3)
+    { dim: "ambiente", text: "20. Deforestación en Amazonía:", opts: [
+      "Moratoria a agricultura extensiva y militarización de parques.",
+      "Abrir áreas protegidas a explotación maderera controlada.",
+      "Pago por servicios ambientales a propietarios privados.",
+      "Acuerdos con comunidades campesinas e incentivos a conservación.",
+      "Zonificación agroambiental y monitoreo satelital ciudadano."
+    ], candidato: [0,1,2,3,4] },
+    { dim: "ambiente", text: "21. Transición energética y combustibles fósiles:", opts: [
+      "Salida inmediata de hidrocarburos y megaproyectos renovables públicos.",
+      "No priorizar agenda climática, el desarrollo económico primero.",
+      "Incentivos fiscales a energías limpias, sin subsidios a fósiles.",
+      "Hoja de ruta a 2050 con participación privada y fondos internacionales.",
+      "Metas vinculantes de reducción de emisiones y electromovilidad."
+    ], candidato: [0,1,2,3,4] },
+    { dim: "ambiente", text: "22. Gestión del agua y riesgo climático:", opts: [
+      "Declarar el agua como bien público no mercantilizable y crear tribunales del agua.",
+      "Concesiones privadas con tarifas reguladas.",
+      "Fortalecer corporaciones autónomas regionales (CAR).",
+      "Sistemas de pago por servicios ecosistémicos y reservas de agua.",
+      "Plan nacional de adaptación con participación comunitaria."
+    ], candidato: [0,1,2,3,4] },
+    // INSTITUCIONES (3)
+    { dim: "instituciones", text: "23. Relación con el Congreso y oposición:", opts: [
+      "Gobernar mediante decretos y consultas populares si el Congreso bloquea.",
+      "Romper el 'establishment' mediante asamblea constituyente.",
+      "Respetar mayorías legislativas pero usar mecanismos de urgencia.",
+      "Construir coaliciones programáticas, no repartir burocracia.",
+      "Diálogo permanente y acuerdos de gobernabilidad por bloques."
+    ], candidato: [0,1,2,3,4] },
+    { dim: "instituciones", text: "24. Independencia judicial y Corte Constitucional:", opts: [
+      "Reformar justicia para hacerla más popular y menos tecnocrática.",
+      "Elegir jueces por voto popular y limitar control constitucional.",
+      "Mantener sistema actual con ajustes de meritocracia.",
+      "Defender estado de derecho y separación de poderes.",
+      "Fortalecer veedurías ciudadanas respetando autonomía judicial."
+    ], candidato: [0,1,2,3,4] },
+    { dim: "instituciones", text: "25. Medidas contra corrupción:", opts: [
+      "Crear comisión de investigación con facultades para destituir congresistas.",
+      "Reducir fuero penal a altos funcionarios y extinción de dominio ágil.",
+      "Endurecer penas y cárcel para corruptos sin beneficios.",
+      "Tribunal independiente anticorrupción con control externo.",
+      "Digitalización de contratos + observatorio ciudadano de compras públicas."
+    ], candidato: [0,1,2,3,4] }
+  ];
+
+  const nombresCandidatos = ["Iván Cepeda", "Abelardo de la Espriella", "Paloma Valencia", "Sergio Fajardo", "Claudia López"];
+  const colores = ["#9b59b6", "#b87c4f", "#2c6e9e", "#2a9d8f", "#e9a23b"];
+
+  // Función para mezclar opciones de una pregunta manteniendo la relación texto -> candidato
+  function shuffleOptions(question) {
+    const opts = question.opts;
+    const cands = question.candidato;
+    // crear array de pares
+    let pairs = opts.map((text, idx) => ({ text, candidato: cands[idx] }));
+    // mezclar Fisher-Yates
+    for (let i = pairs.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [pairs[i], pairs[j]] = [pairs[j], pairs[i]];
+    }
+    const newOpts = pairs.map(p => p.text);
+    const newCands = pairs.map(p => p.candidato);
+    return { opts: newOpts, candidato: newCands };
+  }
+
+  // Almacenar preguntas con opciones mezcladas para el renderizado y para el cálculo (usaremos la versión mezclada)
+  let preguntasMezcladas = [];
+
+  function buildShuffledQuestions() {
+    preguntasMezcladas = preguntasBase.map(q => {
+      const shuffled = shuffleOptions(q);
+      return {
+        dim: q.dim,
+        text: q.text,
+        opts: shuffled.opts,
+        candidato: shuffled.candidato  // array de 5 números
+      };
+    });
+  }
+
+  // Renderizar formulario a partir de preguntasMezcladas
+  function renderForm() {
+    const formContainer = document.getElementById("testForm");
+    let html = "";
+    let currentDim = "";
+    for (let i = 0; i < preguntasMezcladas.length; i++) {
+      const q = preguntasMezcladas[i];
+      if (q.dim !== currentDim) {
+        currentDim = q.dim;
+        let tituloDim = "";
+        if (currentDim === "economia") tituloDim = "💰 Economía y finanzas públicas";
+        else if (currentDim === "empleo") tituloDim = "👔 Empleo, formalización y productividad";
+        else if (currentDim === "seguridad") tituloDim = "🛡️ Seguridad y convivencia";
+        else if (currentDim === "social") tituloDim = "🧑‍🤝‍🧑 Política social y desigualdad";
+        else if (currentDim === "salud") tituloDim = "🏥 Salud y sostenibilidad";
+        else if (currentDim === "educacion") tituloDim = "📚 Educación y capital humano";
+        else if (currentDim === "ambiente") tituloDim = "🌿 Medio ambiente y transición";
+        else if (currentDim === "instituciones") tituloDim = "⚖️ Instituciones y democracia";
+        html += `<div class="dimension" id="${currentDim}"><h2>${tituloDim}</h2>`;
+      }
+      html += `<div class="question-card">
+        <div class="question-text">${q.text}</div>
+        <div class="options">`;
+      for (let j = 0; j < q.opts.length; j++) {
+        html += `<label class="option">
+          <input type="radio" name="q${i}" value="${j}" data-cand="${q.candidato[j]}">
+          <span>${q.opts[j]}</span>
+        </label>`;
+      }
+      html += `</div></div>`;
+      if (i === preguntasMezcladas.length-1 || preguntasMezcladas[i+1]?.dim !== currentDim) html += `</div>`;
+    }
+    formContainer.innerHTML = html;
+  }
+
+  // Calcular afinidad verificando que todas las preguntas estén respondidas
+  function calcularAfinidad() {
+    const total = preguntasMezcladas.length;
+    let puntajes = [0,0,0,0,0];
+    let respondidas = 0;
+    let todasRespondidas = true;
+    for (let i = 0; i < total; i++) {
+      const radios = document.querySelectorAll(`input[name="q${i}"]`);
+      let seleccionado = null;
+      for (let r of radios) {
+        if (r.checked) {
+          seleccionado = r;
+          break;
+        }
+      }
+      if (seleccionado) {
+        const candIdx = parseInt(seleccionado.getAttribute("data-cand"));
+        if (!isNaN(candIdx)) puntajes[candIdx]++;
+        respondidas++;
+      } else {
+        todasRespondidas = false;
+      }
+    }
+    if (!todasRespondidas) {
+      const panel = document.getElementById("resultadoPanel");
+      panel.innerHTML = `<div class="error-message">⚠️ Debes responder todas las preguntas (${total} en total) para obtener tu afinidad. Faltan ${total - respondidas} pregunta(s).</div>`;
+      panel.style.display = "block";
+      return;
+    }
+    let porcentajes = puntajes.map(p => Math.round((p / total) * 100));
+    let maxPuntaje = Math.max(...puntajes);
+    let indicesGanadores = [];
+    for (let i=0;i<puntajes.length;i++) if(puntajes[i]===maxPuntaje) indicesGanadores.push(i);
+    let resultadoHTML = `<div class="result-header">🎯 Tu candidato más afín</div>`;
+    if (indicesGanadores.length === 1) {
+      let idx = indicesGanadores[0];
+      resultadoHTML += `<div class="result-candidate"><strong>${nombresCandidatos[idx]}</strong> · ${porcentajes[idx]}% de coincidencia</div>`;
+    } else {
+      resultadoHTML += `<div>Empate entre: ${indicesGanadores.map(i=>nombresCandidatos[i]).join(", ")}</div>`;
+    }
+    resultadoHTML += `<div style="margin-top:1rem;"><strong>🔍 Afinidad detallada:</strong></div>`;
+    for (let i=0;i<nombresCandidatos.length;i++) {
+      resultadoHTML += `<div>${nombresCandidatos[i]} <span style="float:right;">${porcentajes[i]}%</span>
+        <div class="progress-bar"><div class="progress-fill" style="width:${porcentajes[i]}%; background:${colores[i]};"></div></div></div>`;
+    }
+    resultadoHTML += `<p style="margin-top:1rem; font-size:0.8rem;">Basado en las ${total} preguntas. Las opciones representan posturas viables de cada candidato (orden aleatorio en cada carga).</p>`;
+    const panel = document.getElementById("resultadoPanel");
+    panel.innerHTML = resultadoHTML;
+    panel.style.display = "block";
+    window.scrollTo({ top: document.getElementById("resultadoPanel").offsetTop - 20, behavior: "smooth" });
+  }
+
+  // Inicialización: mezclar preguntas y renderizar
+  window.onload = () => {
+    buildShuffledQuestions();
+    renderForm();
+    document.getElementById("calcularBtn").addEventListener("click", calcularAfinidad);
+  };
+</script>
+</body>
+</html>
+
